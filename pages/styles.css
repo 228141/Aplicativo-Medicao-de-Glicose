@@ -1,14 +1,55 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #e8f5e9; /* Mantendo o fundo verde claro */
+    background-color: #e8f5e9;
     margin: 0;
     padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
+/* Centralizando o formulário e os campos */
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px; /* Adicionando espaçamento */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 400px; /* Limitar a largura máxima do container */
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+form input, form label {
+    width: 100%;
+}
+
+form input {
+    margin-bottom: 15px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #88cc88;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+form button:hover {
+    background-color: #66b266;
 }
 
 header {
@@ -16,29 +57,99 @@ header {
     color: white;
     padding: 20px;
     text-align: center;
+    border-radius: 10px;
+}
+
+.app-logo {
+    width: 100px;
+    height: auto;
+    margin-top: 10px;
 }
 
 main {
     background-color: white;
-    padding: 20px; /* Adicionando espaçamento ao conteúdo */
+    padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
-footer {
-    background-color: #a8d5ba;
+/* Estilo para os botões em linhas separadas */
+button {
+    display: block;
+    width: 100%; /* Ocupa toda a largura da tela */
+    margin: 10px 0; /* Espaçamento entre os botões */
+    padding: 10px;
+    background-color: #88cc88; /* Cor verde clara */
+    border: none;
     color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #66b266; /* Cor ao passar o mouse */
+}
+
+.hidden {
+    display: none;
+}
+
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+}
+
+/* Estilo para os formulários */
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+form input {
+    margin-bottom: 15px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+form label {
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+form button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #88cc88;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+form button:hover {
+    background-color: #66b266;
+}
+
+/* Estilo para o rodapé */
+footer {
     text-align: center;
     padding: 10px;
-}
-
-@media screen and (max-width: 768px) {
-    .container {
-        padding: 15px; /* Ajuste para telas menores */
-    }
-
-    main {
-        padding: 15px; /* Menor espaçamento para dispositivos móveis */
-    }
+    background-color: #f1f1f1;
+    color: #333;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-size: 14px;
 }

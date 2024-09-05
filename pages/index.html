@@ -1,138 +1,94 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciamento de Pacientes</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        table {
-            width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
-        }
-
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: center;
-        }
-
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            max-width: 400px;
-            margin: 20px auto;
-        }
-
-        label {
-            margin-top: 10px;
-        }
-
-        input[type="text"], input[type="number"] {
-            padding: 10px;
-            margin-top: 5px;
-        }
-
-        button {
-            margin-top: 15px;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <title>App de Gestão de Diabetes</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js"></script>
 </head>
 <body>
+    <div class="container">
 
-    <h1>Gerenciamento de Pacientes</h1>
+        <!-- Tela de boas-vindas -->
+        <section id="welcome-screen" class="screen">
+            <header>
+                <h1>App Gestão de Diabetes</h1>
+                <img src="logo.png" alt="Logo do App" class="app-logo">
+            </header>
+            <main>
+                <p class="description">
+                    Simplifique o monitoramento dos níveis de glicose, gerencie seus tratamentos de forma eficiente e tenha acesso a dicas de vida saudável!
+                </p>
+                <button onclick="showScreen('register-screen')">Cadastrar</button>
+                <button onclick="showScreen('login-screen')">Login</button>
+                <button onclick="showScreen('reset-screen')">Redefinir Senha</button>
+            </main>
+        </section>
 
-    <!-- Formulário para Criar/Atualizar Pacientes -->
-    <form id="patient-form">
-        <label for="name">Nome do Paciente:</label>
-        <input type="text" id="name" required>
+        <!-- Tela de cadastro -->
+        <section id="register-screen" class="screen hidden">
+            <header>
+                <h2>Cadastro de Usuário</h2>
+            </header>
+            <main>
+                <form id="register-form">
+                    <label for="username">Nome de Usuário:</label>
+                    <input type="text" id="username" name="username" required>
 
-        <label for="age">Idade:</label>
-        <input type="number" id="age" required>
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" required>
 
-        <button type="submit">Adicionar Paciente</button>
-    </form>
+                    <label for="password">Senha:</label>
+                    <input type="password" id="password" name="password" required>
 
-    <!-- Tabela de Pacientes -->
-    <table>
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Idade</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody id="patient-list">
-            <!-- Pacientes serão inseridos aqui -->
-        </tbody>
-    </table>
+                    <button type="submit">Cadastrar</button>
+                </form>
+                <button onclick="showScreen('welcome-screen')">Voltar</button>
+            </main>
+        </section>
 
-    <script>
-        const form = document.getElementById('patient-form');
-        const patientList = document.getElementById('patient-list');
+        <!-- Tela de login -->
+        <section id="login-screen" class="screen hidden">
+            <header>
+                <h2>Login</h2>
+            </header>
+            <main>
+                <form id="login-form">
+                    <label for="login-email">E-mail:</label>
+                    <input type="email" id="login-email" name="email" required>
 
-        let patients = [];
+                    <label for="login-password">Senha:</label>
+                    <input type="password" id="login-password" name="password" required>
 
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            const name = document.getElementById('name').value;
-            const age = document.getElementById('age').value;
+                    <button type="submit">Entrar</button>
+                </form>
+                <button onclick="showScreen('welcome-screen')">Voltar</button>
+            </main>
+        </section>
 
-            const patient = { name, age };
-            patients.push(patient);
+        <!-- Tela de redefinição de senha -->
+        <section id="reset-screen" class="screen hidden">
+            <header>
+                <h2>Redefinir Senha</h2>
+            </header>
+            <main>
+                <form id="reset-form">
+                    <label for="reset-email">E-mail:</label>
+                    <input type="email" id="reset-email" name="email" required>
 
-            displayPatients();
-            form.reset();
-        });
-
-        function displayPatients() {
-            patientList.innerHTML = '';
-            patients.forEach((patient, index) => {
-                const row = document.createElement('tr');
-
-                row.innerHTML = `
-                    <td>${patient.name}</td>
-                    <td>${patient.age}</td>
-                    <td>
-                        <button onclick="deletePatient(${index})">Excluir</button>
-                    </td>
-                `;
-                patientList.appendChild(row);
-            });
-        }
-
-        function deletePatient(index) {
-            patients.splice(index, 1);
-            displayPatients();
-        }
-    </script>
-
+                    <button type="submit">Redefinir Senha</button>
+                </form>
+                <button onclick="showScreen('welcome-screen')">Voltar</button>
+            </main>
+        </section>
+        
+    </div>
+    
+    <footer>
+        <p>Senac Grupo 09</p>
+    </footer>
+    
+    <script src="app.js"></script>
 </body>
 </html>
