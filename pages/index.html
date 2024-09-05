@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Pacientes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        label {
+            margin-top: 10px;
+        }
+
+        input[type="text"], input[type="number"] {
+            padding: 10px;
+            margin-top: 5px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Gerenciamento de Pacientes</h1>
+
+    <!-- Formulário para Criar/Atualizar Pacientes -->
+    <form id="patient-form">
+        <label for="name">Nome do Paciente:</label>
+        <input type="text" id="name" required>
+
+        <label for="age">Idade:</label>
+        <input type="number" id="age" required>
+
+        <button type="submit">Adicionar Paciente</button>
+    </form>
+
+    <!-- Tabela de Pacientes -->
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Idade</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="patient-list">
+            <!-- Pacientes serão inseridos aqui -->
+        </tbody>
+    </table>
+
+    <script>
+        const form = document.getElementById('patient-form');
+        const patientList = document.getElementById('patient-list');
+
+        let patients = [];
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+
+            const patient = { name, age };
+            patients.push(patient);
+
+            displayPatients();
+            form.reset();
+        });
+
+        function displayPatients() {
+            patientList.innerHTML = '';
+            patients.forEach((patient, index) => {
+                const row = document.createElement('tr');
+
+                row.innerHTML = `
+                    <td>${patient.name}</td>
+                    <td>${patient.age}</td>
+                    <td>
+                        <button onclick="deletePatient(${index})">Excluir</button>
+                    </td>
+                `;
+                patientList.appendChild(row);
+            });
+        }
+
+        function deletePatient(index) {
+            patients.splice(index, 1);
+            displayPatients();
+        }
+    </script>
+
+</body>
+</html>

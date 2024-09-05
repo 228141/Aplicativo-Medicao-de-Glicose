@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App de Gestão de Diabetes</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Gestão de Diabetes</h1>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#" onclick="mostrarDashboard()">Monitorar Glicose</a></li>
+            <li><a href="#" onclick="mostrarHistorico()">Histórico</a></li>
+            <li><a href="#">Dicas de Saúde</a></li>
+            <li><a href="#">Medicações</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <section id="dashboard">
+            <h2>Bem-vindo ao seu painel de controle</h2>
+            <p>Aqui você pode monitorar seus níveis de glicose, adicionar novas medições e acompanhar seu histórico de saúde.</p>
+            <!-- Botões de acesso rápido -->
+            <div class="buttons">
+                <button onclick="mostrarFormularioMedição()">Adicionar Medição</button>
+                <button onclick="mostrarHistorico()">Ver Histórico</button>
+            </div>
+        </section>
+        
+        <!-- Formulário de Adicionar Medição -->
+        <section id="formulario-medicao" style="display:none;">
+            <h2>Adicionar Nova Medição</h2>
+            <form id="medicaoForm">
+                <label for="nivel-glicose">Nível de Glicose:</label>
+                <input type="number" id="nivel-glicose" name="nivel-glicose" required>
+                
+                <label for="data-medicao">Data e Hora:</label>
+                <input type="datetime-local" id="data-medicao" name="data-medicao" required>
+                
+                <button type="submit">Salvar Medição</button>
+                <button type="button" onclick="cancelarFormulario()">Cancelar</button>
+            </form>
+        </section>
+
+        <!-- Seção de Histórico (vazia por enquanto) -->
+        <section id="historico" style="display:none;">
+            <h2>Histórico de Medições</h2>
+            <p>Em breve, seu histórico de medições aparecerá aqui.</p>
+        </section>
+    </main>
+    
+    <footer>
+        <p>App de Gestão de Diabetes - Desenvolvido por [Seu Nome]</p>
+    </footer>
+    
+    <!-- Referência ao arquivo JavaScript -->
+    <script src="scripts.js"></script>
+</body>
+</html>
