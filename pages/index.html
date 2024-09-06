@@ -13,14 +13,14 @@
         <!-- Tela de boas-vindas -->
         <section id="welcome-screen" class="screen">
             <header>
-                <h1>App Gestão de Diabetes</h1>
-                <img src="logo.png" alt="Logo do App" class="app-logo">
+                <h1>GlicoCare</h1>
+                
             </header>
             <main>
                 <p class="description">
                     Simplifique o monitoramento dos níveis de glicose, gerencie seus tratamentos de forma eficiente e tenha acesso a dicas de vida saudável!
                 </p>
-                <button onclick="showScreen('register-screen')">Cadastrar</button>
+                <button onclick="showScreen('register-screen')">Novo Cadastro</button>
                 <button onclick="showScreen('login-screen')">Login</button>
                 <button onclick="showScreen('reset-screen')">Redefinir Senha</button>
             </main>
@@ -40,6 +40,9 @@
                     <input type="email" id="email" name="email" required>
 
                     <label for="password">Senha:</label>
+                    <input type="password" id="password" name="password" required>
+
+                    <label for="password">Repetir Senha:</label>
                     <input type="password" id="password" name="password" required>
 
                     <button type="submit">Cadastrar</button>
