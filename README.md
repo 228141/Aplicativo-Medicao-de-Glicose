@@ -1,2 +1,2 @@
-# des_sist_or_disp_moveis_baseados_web
+# Aplicativo de Medição de Glicose
  DESENVOLVIMENTO DE SISTEMAS ORIENTADO A DISPOSITIVOS MÓVEIS E BASEADOS NA WEB
