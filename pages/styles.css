@@ -1,119 +1,47 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #e8f5e9;
+/* Estilos globais */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e8f5e9; /* Verde claro */
+    padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
 }
 
-/* Centralizando o formulário e os campos */
-.container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    max-width: 400px; /* Limitar a largura máxima do container */
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+h1, h2 {
+    color: #008000; /* Verde escuro */
+    margin-bottom: 20px;
 }
 
-
-form input, form label {
-    width: 100%;
-}
-
-form input {
-    margin-bottom: 15px;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-form button {
-    padding: 10px;
-    font-size: 16px;
-    background-color: #88cc88;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-    margin-top: 10px;
-    width: 100%;
-}
-
-form button:hover {
-    background-color: #66b266;
-}
-
-header {
-    background-color: #a8d5ba;
-    color: white;
-    padding: 20px;
+/* Centralizando o conteúdo principal */
+.main-container {
     text-align: center;
-    border-radius: 10px;
-}
-
-.app-logo {
-    width: 100px;
-    height: auto;
-    margin-top: 10px;
-}
-
-main {
-    background-color: white;
+    margin: 0 auto;
     padding: 20px;
+    max-width: 600px;
+    background-color: white;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
 }
 
-/* Estilo para os botões em linhas separadas */
-button {
-    display: block;
-    width: 100%; /* Ocupa toda a largura da tela */
-    margin: 10px 0; /* Espaçamento entre os botões */
-    padding: 10px;
-    background-color: #88cc88; /* Cor verde clara */
-    border: none;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #66b266; /* Cor ao passar o mouse */
-}
-
-.hidden {
-    display: none;
-}
-
-.screen {
-    display: none;
-}
-
-.screen.active {
-    display: block;
-}
-
-/* Estilo para os formulários */
+/* Formulário e campos */
 form {
     display: flex;
     flex-direction: column;
+    gap: 15px;
     width: 100%;
     max-width: 400px;
     margin: 0 auto;
 }
 
 form input {
-    margin-bottom: 15px;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
@@ -135,10 +63,163 @@ form button {
     border: none;
     cursor: pointer;
     border-radius: 4px;
-    margin-top: 10px;
+    width: 100%;
 }
 
 form button:hover {
+    background-color: #66b266;
+}
+
+/* Estilo para o rodapé */
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #f1f1f1;
+    color: #333;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-size: 14px;
+}
+
+/* Botões das opções */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.option-btn {
+    padding: 15px;
+    background-color: #68bd68b6; /* Verde claro */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.option-btn:hover {
+    background-color: #66b266; /* Verde mais escuro */
+}
+
+/* Estilo das telas */
+.screen {
+    display: none;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.screen.active {
+    display: block;
+}
+
+/* Estilos para medições */
+#medicao-atual {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+/* Estilo responsivo */
+@media (max-width: 768px) {
+    .main-container {
+        padding: 15px;
+    }
+
+    .option-btn {
+        padding: 10px;
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e8f5e9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    background-color: #a8d5ba;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #68bd68b6; /* Cor verde clara */
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #66b266; /* Cor ao passar o mouse */
+}
+
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Estilo para os botões nas telas */
+.option-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #68bd68b6; /* Verde mais claro */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+    font-size: 16px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.option-btn:hover {
     background-color: #66b266;
 }
 

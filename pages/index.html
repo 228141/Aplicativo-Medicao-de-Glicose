@@ -5,24 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>App de Gestão de Diabetes</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="scripts.js"></script>
+    <script src="scripts.js" defer></script>
 </head>
 <body>
     <div class="container">
 
         <!-- Tela de boas-vindas -->
-        <section id="welcome-screen" class="screen">
+        <section id="welcome-screen" class="screen active">
             <header>
                 <h1>GlicoCare</h1>
-                
             </header>
             <main>
                 <p class="description">
                     Simplifique o monitoramento dos níveis de glicose, gerencie seus tratamentos de forma eficiente e tenha acesso a dicas de vida saudável!
                 </p>
-                <button onclick="showScreen('register-screen')">Novo Cadastro</button>
-                <button onclick="showScreen('login-screen')">Login</button>
-                <button onclick="showScreen('reset-screen')">Redefinir Senha</button>
+                <button class="option-btn" onclick="showScreen('register-screen')">Novo Cadastro</button>
+                <button class="option-btn" onclick="showScreen('login-screen')">Login</button>
+                <button class="option-btn" onclick="showScreen('reset-screen')">Redefinir Senha</button>
             </main>
         </section>
 
@@ -42,12 +41,12 @@
                     <label for="password">Senha:</label>
                     <input type="password" id="password" name="password" required>
 
-                    <label for="password">Repetir Senha:</label>
-                    <input type="password" id="password" name="password" required>
+                    <label for="confirm-password">Repetir Senha:</label>
+                    <input type="password" id="confirm-password" name="password" required>
 
-                    <button type="submit">Cadastrar</button>
+                    <button class="option-btn" type="submit">Cadastrar</button>
                 </form>
-                <button onclick="showScreen('welcome-screen')">Voltar</button>
+                <button class="option-btn" onclick="showScreen('welcome-screen')">Voltar</button>
             </main>
         </section>
 
@@ -64,9 +63,9 @@
                     <label for="login-password">Senha:</label>
                     <input type="password" id="login-password" name="password" required>
 
-                    <button type="submit">Entrar</button>
+                    <button class="option-btn" type="submit">Entrar</button>
                 </form>
-                <button onclick="showScreen('welcome-screen')">Voltar</button>
+                <button class="option-btn" onclick="showScreen('welcome-screen')">Voltar</button>
             </main>
         </section>
 
@@ -80,9 +79,9 @@
                     <label for="reset-email">E-mail:</label>
                     <input type="email" id="reset-email" name="email" required>
 
-                    <button type="submit">Redefinir Senha</button>
+                    <button class="option-btn" type="submit">Redefinir Senha</button>
                 </form>
-                <button onclick="showScreen('welcome-screen')">Voltar</button>
+                <button class="option-btn" onclick="showScreen('welcome-screen')">Voltar</button>
             </main>
         </section>
         
