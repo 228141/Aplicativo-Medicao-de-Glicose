@@ -1,58 +1,117 @@
-// Variáveis globais
-let medicoes = [];
+// scripts.js
 
-// Função para mostrar a tela desejada
+// Função para mostrar uma tela específica e ocultar as demais
 function showScreen(screenId) {
-    // Esconder todas as telas
     const screens = document.querySelectorAll('.screen');
     screens.forEach(screen => {
-        screen.classList.add('hidden');
+        if (screen.id === screenId) {
+            screen.classList.remove('hidden');
+            screen.classList.add('active');
+        } else {
+            screen.classList.add('hidden');
+            screen.classList.remove('active');
+        }
     });
-
-    // Mostrar a tela selecionada
-    const targetScreen = document.getElementById(screenId);
-    targetScreen.classList.remove('hidden');
 }
 
-// Função para carregar as medições do localStorage ao iniciar
-function carregarMedicoes() {
-    if (localStorage.getItem('medicoes')) {
-        medicoes = JSON.parse(localStorage.getItem('medicoes'));
+// Função para inicializar a página com base na URL ou exibir a tela padrão
+function initializePage() {
+    const hash = window.location.hash.substring(1);
+    if (hash) {
+        showScreen(hash);
+    } else {
+        showScreen('dashboard-screen'); // Tela padrão
     }
 }
 
-// Função para salvar uma nova medição
-document.getElementById('form-medicao').addEventListener('submit', function(e) {
-    e.preventDefault(); // Impedir o envio padrão do formulário
+// Função para registrar um novo usuário
+function handleRegister(event) {
+    event.preventDefault();
 
-    // Capturar os valores do formulário
-    const nivelGlicose = document.getElementById('nivel-glicose').value;
-    const dataHora = document.getElementById('data-hora').value;
-    
-    // Criar objeto da medição
-    const medicao = {
-        nivel: nivelGlicose,
-        dataHora: dataHora
-    };
-    
-    // Adicionar a medição ao array de medições e salvar no localStorage
+    const username = document.getElementById('username').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
+
+    if (password !== confirmPassword) {
+        alert('As senhas não correspondem!');
+        return;
+    }
+
+    // Recupera usuários existentes do localStorage
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+
+    // Verifica se o e-mail já está cadastrado
+    if (users.some(user => user.email === email)) {
+        alert('E-mail já cadastrado!');
+        return;
+    }
+
+    // Adiciona o novo usuário
+    users.push({ username, email, password });
+    localStorage.setItem('users', JSON.stringify(users));
+
+    alert('Cadastro realizado com sucesso!');
+    showScreen('dashboard-screen');
+}
+
+// Função para lidar com o login do usuário
+function handleLogin(event) {
+    event.preventDefault();
+
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find(user => user.email === email && user.password === password);
+
+    if (user) {
+        alert('Login bem-sucedido!');
+        // Redireciona para page2.html após o login
+        window.location.href = 'page2.html';
+    } else {
+        alert('E-mail ou senha inválidos!');
+    }
+}
+
+// Função para redefinir a senha do usuário
+function handleResetPassword(event) {
+    event.preventDefault();
+
+    const email = document.getElementById('reset-email').value.trim();
+
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+    const userIndex = users.findIndex(user => user.email === email);
+
+    if (userIndex !== -1) {
+        // Para fins de demonstração, redefine a senha para 'newpassword'
+        users[userIndex].password = 'newpassword';
+        localStorage.setItem('users', JSON.stringify(users));
+        alert('Senha redefinida para "newpassword". Por favor, faça login.');
+        showScreen('login-screen');
+    } else {
+        alert('E-mail não encontrado!');
+    }
+}
+
+// Funções relacionadas às medições (page2.html)
+function salvarMedicao(nivelGlicose, dataHora) {
+    const medicao = { nivelGlicose, dataHora };
+    let medicoes = JSON.parse(localStorage.getItem('medicoes')) || [];
     medicoes.push(medicao);
     localStorage.setItem('medicoes', JSON.stringify(medicoes));
-
-    // Atualizar a última medição exibida e voltar para a tela de "Última Medição"
     exibirUltimaMedicao();
-    showScreen('ultima-medicao');
-});
+}
 
-// Função para exibir a última medição
 function exibirUltimaMedicao() {
     const medicaoAtualDiv = document.getElementById('medicao-atual');
-    
-    // Verificar se existem medições
+    if (!medicaoAtualDiv) return;
+
+    let medicoes = JSON.parse(localStorage.getItem('medicoes')) || [];
     if (medicoes.length > 0) {
         const ultimaMedicao = medicoes[medicoes.length - 1];
         medicaoAtualDiv.innerHTML = `
-            <p>Nível de Glicose: ${ultimaMedicao.nivel} mg/dL</p>
+            <p>Nível de Glicose: ${ultimaMedicao.nivelGlicose} mg/dL</p>
             <p>Data e Hora: ${new Date(ultimaMedicao.dataHora).toLocaleString()}</p>
         `;
     } else {
@@ -60,90 +119,70 @@ function exibirUltimaMedicao() {
     }
 }
 
-// Exibir a tela inicial ao carregar
-document.addEventListener('DOMContentLoaded', function() {
-    carregarMedicoes(); // Carregar medições salvas
-    exibirUltimaMedicao(); // Exibir última medição
-    showScreen('welcome-screen');  // Exibir tela de boas-vindas por padrão
-});
+function exibirHistoricoMedicoes() {
+    const listaHistorico = document.getElementById('lista-historico');
+    if (!listaHistorico) return;
 
-    // Verifica o hash da URL e abre a tela correspondente
-    const hash = window.location.hash.substring(1);
-    if (hash) {
-        showScreen(hash);
+    listaHistorico.innerHTML = '';
+    const historico = JSON.parse(localStorage.getItem('medicoes')) || [];
+
+    if (historico.length === 0) {
+        listaHistorico.innerHTML = '<li>Nenhuma medição registrada.</li>';
     } else {
-        showScreen('welcome-screen');  // Tela padrão
-};
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Função para trocar de tela
-    function showScreen(screenId) {
-        // Seleciona todas as telas com a classe 'screen'
-        const screens = document.querySelectorAll('.screen');
-
-        // Oculta todas as telas
-        screens.forEach(screen => {
-            screen.classList.add('hidden');
-            screen.classList.remove('active');
+        historico.forEach((medicao, index) => {
+            const item = document.createElement('li');
+            item.textContent = `Medição ${index + 1}: Glicose: ${medicao.nivelGlicose} mg/dL - Data: ${new Date(medicao.dataHora).toLocaleString()}`;
+            listaHistorico.appendChild(item);
         });
-
-        // Exibe a tela selecionada
-        const targetScreen = document.getElementById(screenId);
-        if (targetScreen) {
-            targetScreen.classList.remove('hidden');
-            targetScreen.classList.add('active');
-        } else {
-            console.error(`Tela com ID "${screenId}" não encontrada.`);
-        }
-    }
-
-    // Expor a função globalmente para o HTML
-    window.showScreen = showScreen;
-});
-
-// Espera o DOM ser completamente carregado
-document.addEventListener('DOMContentLoaded', function() {
-
-    // Função para exibir a tela selecionada e ocultar as demais
-    function showScreen(screenId) {
-        // Seleciona todas as telas com a classe 'screen'
-        const screens = document.querySelectorAll('.screen');
-
-        // Oculta todas as telas
-        screens.forEach(screen => {
-            screen.classList.add('hidden');
-            screen.classList.remove('active');
-        });
-
-        // Exibe a tela com o ID fornecido
-        const targetScreen = document.getElementById(screenId);
-        if (targetScreen) {
-            targetScreen.classList.remove('hidden');
-            targetScreen.classList.add('active');
-        } else {
-            console.error(`A tela com ID "${screenId}" não foi encontrada.`);
-        }
-    }
-
-    // Expor a função showScreen para poder ser usada no HTML
-    window.showScreen = showScreen;
-});
-
-function showScreen(screenId) {
-    console.log(`Exibindo a tela: ${screenId}`);
-    const screens = document.querySelectorAll('.screen');
-
-    screens.forEach(screen => {
-        screen.classList.add('hidden');
-        screen.classList.remove('active');
-    });
-
-    const targetScreen = document.getElementById(screenId);
-    if (targetScreen) {
-        targetScreen.classList.remove('hidden');
-        targetScreen.classList.add('active');
-    } else {
-        console.error(`A tela com ID "${screenId}" não foi encontrada.`);
     }
 }
 
+// Inicialização das funcionalidades quando o DOM estiver carregado
+document.addEventListener('DOMContentLoaded', function() {
+    initializePage();
+
+    // Event listener para o formulário de cadastro
+    const registerForm = document.getElementById('register-form');
+    if (registerForm) {
+        registerForm.addEventListener('submit', handleRegister);
+    }
+
+    // Event listener para o formulário de login
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', handleLogin);
+    }
+
+    // Event listener para o formulário de redefinição de senha
+    const resetForm = document.getElementById('reset-form');
+    if (resetForm) {
+        resetForm.addEventListener('submit', handleResetPassword);
+    }
+
+    // Event listener para o formulário de medição (page2.html)
+    const measurementForm = document.getElementById('form-medicao');
+    if (measurementForm) {
+        measurementForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nivelGlicose = document.getElementById('nivel-glicose').value;
+            const dataHora = document.getElementById('data-hora').value;
+
+            salvarMedicao(nivelGlicose, dataHora);
+            alert('Medição salva com sucesso!');
+            showScreen('ultima-medicao');
+        });
+    }
+
+    // Inicializa a última medição e histórico se estiver na page2.html
+    if (window.location.pathname.includes('page2.html')) {
+        exibirUltimaMedicao();
+
+        // Adiciona event listener para exibir histórico
+        const historicoBtn = document.getElementById('historico-btn');
+        if (historicoBtn) {
+            historicoBtn.addEventListener('click', function() {
+                showScreen('historico-medicoes');
+            });
+        }
+    }
+});
