@@ -1,5 +1,3 @@
-// scripts.js
-
 // Função para mostrar uma tela específica e ocultar as demais
 function showScreen(screenId) {
     const screens = document.querySelectorAll('.screen');
@@ -67,8 +65,8 @@ function handleLogin(event) {
 
     if (user) {
         alert('Login bem-sucedido!');
-        // Redireciona para page2.html após o login
-        window.location.href = 'page2.html';
+        localStorage.setItem('loggedInUser', email); // Salva o e-mail do usuário logado
+        window.location.href = 'page2.html'; // Redireciona para page2.html após o login
     } else {
         alert('E-mail ou senha inválidos!');
     }
@@ -94,20 +92,28 @@ function handleResetPassword(event) {
     }
 }
 
-// Funções relacionadas às medições (page2.html)
+// Função para salvar uma nova medição
 function salvarMedicao(nivelGlicose, dataHora) {
     const medicao = { nivelGlicose, dataHora };
-    let medicoes = JSON.parse(localStorage.getItem('medicoes')) || [];
-    medicoes.push(medicao);
-    localStorage.setItem('medicoes', JSON.stringify(medicoes));
-    exibirUltimaMedicao();
+    const userEmail = localStorage.getItem('loggedInUser'); // Obtém o e-mail do usuário logado
+
+    if (userEmail) {
+        let medicoes = JSON.parse(localStorage.getItem(userEmail + '-measurements')) || [];
+        medicoes.push(medicao);
+        localStorage.setItem(userEmail + '-measurements', JSON.stringify(medicoes));
+        exibirUltimaMedicao(); // Atualiza a exibição da última medição
+    } else {
+        alert('Usuário não encontrado. Faça login primeiro.');
+    }
 }
 
+// Função para exibir a última medição
 function exibirUltimaMedicao() {
     const medicaoAtualDiv = document.getElementById('medicao-atual');
     if (!medicaoAtualDiv) return;
 
-    let medicoes = JSON.parse(localStorage.getItem('medicoes')) || [];
+    const userEmail = localStorage.getItem('loggedInUser'); // Obtém o e-mail do usuário logado
+    let medicoes = JSON.parse(localStorage.getItem(userEmail + '-measurements')) || [];
     if (medicoes.length > 0) {
         const ultimaMedicao = medicoes[medicoes.length - 1];
         medicaoAtualDiv.innerHTML = `
@@ -119,12 +125,14 @@ function exibirUltimaMedicao() {
     }
 }
 
+// Função para exibir o histórico de medições
 function exibirHistoricoMedicoes() {
     const listaHistorico = document.getElementById('lista-historico');
     if (!listaHistorico) return;
 
+    const userEmail = localStorage.getItem('loggedInUser'); // Obtém o e-mail do usuário logado
     listaHistorico.innerHTML = '';
-    const historico = JSON.parse(localStorage.getItem('medicoes')) || [];
+    const historico = JSON.parse(localStorage.getItem(userEmail + '-measurements')) || [];
 
     if (historico.length === 0) {
         listaHistorico.innerHTML = '<li>Nenhuma medição registrada.</li>';
@@ -182,111 +190,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (historicoBtn) {
             historicoBtn.addEventListener('click', function() {
                 showScreen('historico-medicoes');
+                exibirHistoricoMedicoes(); // Atualiza a lista de medições
             });
         }
-    }
-});
-
-// Função para salvar os dados do usuário no local storage
-function saveUserData() {
-    const username = document.getElementById('username').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirm-password').value;
-
-    if (password === confirmPassword) {
-        // Criar um objeto com os dados do usuário
-        const user = {
-            username: username,
-            email: email,
-            password: password
-        };
-
-        // Salvar no local storage usando o e-mail como chave
-        localStorage.setItem(email, JSON.stringify(user));
-        alert('Usuário cadastrado com sucesso!');
-
-        // Limpar o formulário
-        document.getElementById('register-form').reset();
-        // Retornar para a tela inicial
-        showScreen('dashboard-screen');
-    } else {
-        alert('As senhas não coincidem. Tente novamente.');
-    }
-}
-
-// Adicionar evento de submissão ao formulário de cadastro
-document.getElementById('register-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Impede o envio padrão do formulário
-    saveUserData();
-});
-
-document.getElementById('register-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Previne o envio padrão do formulário
-    
-    const username = document.getElementById('username').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    
-    // Criação do objeto com os dados do usuário
-    const userData = {
-        username: username,
-        email: email,
-        password: password
-    };
-
-    // Salvando no localStorage usando o email como chave
-    localStorage.setItem(email, JSON.stringify(userData));
-    
-    alert('Cadastro realizado com sucesso!');
-    showScreen('dashboard-screen'); // Volta para a tela inicial
-});
-
-document.getElementById('login-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-
-    // Buscar os dados do usuário no localStorage
-    const storedUser = localStorage.getItem(email);
-
-    if (storedUser) {
-        const userData = JSON.parse(storedUser);
-        
-        // Verifica se a senha está correta
-        if (userData.password === password) {
-            alert('Login bem-sucedido!');
-            // Redireciona para a próxima tela, por exemplo
-            showScreen('page2');
-        } else {
-            alert('Senha incorreta!');
-        }
-    } else {
-        alert('Usuário não encontrado!');
-    }
-});
-
-document.getElementById('reset-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    
-    const email = document.getElementById('reset-email').value;
-    
-    // Busca o usuário pelo e-mail
-    const storedUser = localStorage.getItem(email);
-
-    if (storedUser) {
-        // Lógica para redefinir senha (pode ser pedida uma nova senha)
-        const newPassword = prompt("Digite a nova senha:");
-        const userData = JSON.parse(storedUser);
-        userData.password = newPassword;
-        
-        // Atualiza no localStorage
-        localStorage.setItem(email, JSON.stringify(userData));
-        
-        alert('Senha redefinida com sucesso!');
-        showScreen('dashboard-screen');
-    } else {
-        alert('Usuário não encontrado!');
     }
 });
