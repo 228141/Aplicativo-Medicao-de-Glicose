@@ -1,3 +1,6 @@
+// Variáveis globais
+let medicoes = [];
+
 // Função para mostrar a tela desejada
 function showScreen(screenId) {
     // Esconder todas as telas
@@ -11,15 +14,12 @@ function showScreen(screenId) {
     targetScreen.classList.remove('hidden');
 }
 
-// Exibir a tela inicial ao carregar
-document.addEventListener('DOMContentLoaded', () => {
-    showScreen('welcome-screen');  // Definir a tela inicial para ser mostrada
-    carregarMedicoes();
-    exibirUltimaMedicao();
-});
-
-// Variáveis globais
-let medicoes = [];
+// Função para carregar as medições do localStorage ao iniciar
+function carregarMedicoes() {
+    if (localStorage.getItem('medicoes')) {
+        medicoes = JSON.parse(localStorage.getItem('medicoes'));
+    }
+}
 
 // Função para salvar uma nova medição
 document.getElementById('form-medicao').addEventListener('submit', function(e) {
@@ -60,28 +60,90 @@ function exibirUltimaMedicao() {
     }
 }
 
-// Função para carregar as medições do localStorage ao iniciar
-function carregarMedicoes() {
-    if (localStorage.getItem('medicoes')) {
-        medicoes = JSON.parse(localStorage.getItem('medicoes'));
+// Exibir a tela inicial ao carregar
+document.addEventListener('DOMContentLoaded', function() {
+    carregarMedicoes(); // Carregar medições salvas
+    exibirUltimaMedicao(); // Exibir última medição
+    showScreen('welcome-screen');  // Exibir tela de boas-vindas por padrão
+});
+
+    // Verifica o hash da URL e abre a tela correspondente
+    const hash = window.location.hash.substring(1);
+    if (hash) {
+        showScreen(hash);
+    } else {
+        showScreen('welcome-screen');  // Tela padrão
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Função para trocar de tela
+    function showScreen(screenId) {
+        // Seleciona todas as telas com a classe 'screen'
+        const screens = document.querySelectorAll('.screen');
+
+        // Oculta todas as telas
+        screens.forEach(screen => {
+            screen.classList.add('hidden');
+            screen.classList.remove('active');
+        });
+
+        // Exibe a tela selecionada
+        const targetScreen = document.getElementById(screenId);
+        if (targetScreen) {
+            targetScreen.classList.remove('hidden');
+            targetScreen.classList.add('active');
+        } else {
+            console.error(`Tela com ID "${screenId}" não encontrada.`);
+        }
+    }
+
+    // Expor a função globalmente para o HTML
+    window.showScreen = showScreen;
+});
+
+// Espera o DOM ser completamente carregado
+document.addEventListener('DOMContentLoaded', function() {
+
+    // Função para exibir a tela selecionada e ocultar as demais
+    function showScreen(screenId) {
+        // Seleciona todas as telas com a classe 'screen'
+        const screens = document.querySelectorAll('.screen');
+
+        // Oculta todas as telas
+        screens.forEach(screen => {
+            screen.classList.add('hidden');
+            screen.classList.remove('active');
+        });
+
+        // Exibe a tela com o ID fornecido
+        const targetScreen = document.getElementById(screenId);
+        if (targetScreen) {
+            targetScreen.classList.remove('hidden');
+            targetScreen.classList.add('active');
+        } else {
+            console.error(`A tela com ID "${screenId}" não foi encontrada.`);
+        }
+    }
+
+    // Expor a função showScreen para poder ser usada no HTML
+    window.showScreen = showScreen;
+});
+
+function showScreen(screenId) {
+    console.log(`Exibindo a tela: ${screenId}`);
+    const screens = document.querySelectorAll('.screen');
+
+    screens.forEach(screen => {
+        screen.classList.add('hidden');
+        screen.classList.remove('active');
+    });
+
+    const targetScreen = document.getElementById(screenId);
+    if (targetScreen) {
+        targetScreen.classList.remove('hidden');
+        targetScreen.classList.add('active');
+    } else {
+        console.error(`A tela com ID "${screenId}" não foi encontrada.`);
     }
 }
 
-function showScreen(screenId) {
-    // Esconder todas as telas
-    const screens = document.querySelectorAll('.screen');
-    screens.forEach(screen => {
-        screen.classList.remove('active');
-        screen.classList.add('hidden');
-    });
-    
-    // Mostrar a tela selecionada
-    const targetScreen = document.getElementById(screenId);
-    targetScreen.classList.remove('hidden');
-    targetScreen.classList.add('active');
-}
-
-// Exibir a tela inicial ao carregar
-document.addEventListener('DOMContentLoaded', () => {
-    showScreen('welcome-screen');
-});

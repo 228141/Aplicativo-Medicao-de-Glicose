@@ -106,14 +106,14 @@ footer {
 
 /* Estilo das telas */
 .screen {
-    display: none;
+    display: none; /* Oculta todas as telas por padrão */
     margin: 0 auto;
     padding: 20px;
     text-align: center;
 }
 
 .screen.active {
-    display: block;
+    display: block; /* Exibe apenas a tela ativa */
 }
 
 /* Estilos para medições */
@@ -135,38 +135,7 @@ footer {
     }
 }
 
-.hidden {
-    display: none;
-}
-
-.screen.active {
-    display: block;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #e8f5e9;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
+/* Estilo para o cabeçalho */
 header {
     background-color: #a8d5ba;
     color: white;
@@ -175,6 +144,7 @@ header {
     border-radius: 10px;
 }
 
+/* Botões de ação */
 button {
     display: block;
     width: 100%;
@@ -192,35 +162,99 @@ button:hover {
     background-color: #66b266; /* Cor ao passar o mouse */
 }
 
-.screen {
-    display: none;
-}
-
-.screen.active {
-    display: block;
-}
-
+/* Estilo das telas ocultas */
 .hidden {
     display: none;
 }
 
-/* Estilo para os botões nas telas */
-.option-btn {
-    display: block;
+/* Estilos globais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e8f5e9; /* Verde claro */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Centralizando o conteúdo principal */
+.main-container {
+    text-align: center;
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 600px;
+    background-color: white;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+/* Formulário e campos */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
     width: 100%;
+    max-width: 400px;
+    margin: 0 auto 20px;
+}
+
+form input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+form label {
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+form button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #88cc88;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 100%;
+}
+
+form button:hover {
+    background-color: #66b266;
+}
+
+/* Botões das opções */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.option-btn {
     padding: 15px;
-    background-color: #68bd68b6; /* Verde mais claro */
+    background-color: #68bd68b6; /* Verde claro */
+    color: white;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    color: white;
     font-size: 16px;
-    margin-bottom: 10px;
     transition: background-color 0.3s ease;
 }
 
 .option-btn:hover {
-    background-color: #66b266;
+    background-color: #66b266; /* Verde mais escuro */
 }
 
 /* Estilo para o rodapé */
@@ -234,3 +268,12 @@ footer {
     width: 100%;
     font-size: 14px;
 }
+
+.hidden {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+}
+
