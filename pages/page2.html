@@ -17,6 +17,17 @@
 
         <div class="button-container">
             <button class="option-btn" onclick="showScreen('ultima-medicao')">Incluir Medição</button>
+            <!-- Tela de Última Medição -->
+            <section id="ultima-medicao" class="screen hidden">
+                <h2>Última Medição</h2>
+                <div id="medicao-atual">
+                    <!-- Dados da última medição serão exibidos aqui -->
+                    <p>Nenhuma medição registrada.</p>
+                </div>
+                <button onclick="showScreen('registrar-medicao')">Registrar Nova Medição</button>
+                <button onclick="showScreen('menu-principal')">Voltar</button>
+            </section>    
+
             <button class="option-btn" onclick="showScreen('historico-medicoes')">Ver Histórico</button>
             <button class="option-btn" onclick="mostrarTelaHistorico('historico-medicoes')">Ver Histórico</button>
                 <!-- Tela de Histórico de Medições -->
@@ -38,16 +49,7 @@
         </div>
     </main>
 
-    <!-- Tela de Última Medição -->
-    <section id="ultima-medicao" class="screen hidden">
-        <h2>Última Medição</h2>
-        <div id="medicao-atual">
-            <!-- Dados da última medição serão exibidos aqui -->
-            <p>Nenhuma medição registrada.</p>
-        </div>
-        <button onclick="showScreen('registrar-medicao')">Registrar Nova Medição</button>
-        <button onclick="showScreen('menu-principal')">Voltar</button>
-    </section>
+
 
     <!-- Tela de Registrar Nova Medição -->
     <section id="registrar-medicao" class="screen hidden">
