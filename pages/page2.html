@@ -18,6 +18,18 @@
         <div class="button-container">
             <button class="option-btn" onclick="showScreen('ultima-medicao')">Incluir Medição</button>
             <button class="option-btn" onclick="showScreen('historico-medicoes')">Ver Histórico</button>
+            <button class="option-btn" onclick="mostrarTelaHistorico('historico-medicoes')">Ver Histórico</button>
+                <!-- Tela de Histórico de Medições -->
+                <section id="historico-medicoes" class="screen hidden">
+                    <header>
+                        <h2>Histórico de Medições</h2>
+                    </header>
+                    <main>
+                        <ul id="lista-historico"></ul> <!-- Aqui será exibido o histórico -->
+                        <button class="option-btn" onclick="showScreen('menu-principal')">Voltar</button>
+                    </main>
+                </section>
+
             <button class="option-btn" onclick="showScreen('grafico-medicoes')">Gráfico</button>
             <button class="option-btn" onclick="showScreen('rastreio-insulina')">Rastreio de Insulina e Medicação</button>
             <button class="option-btn" onclick="showScreen('diario-alimentar')">Diário Alimentar</button>
@@ -50,16 +62,6 @@
         <button onclick="showScreen('ultima-medicao')">Voltar</button>
     </section>
 
-    <!-- Tela de Histórico de Medições -->
-    <section id="historico-medicoes" class="screen hidden">
-        <header>
-            <h2>Histórico de Medições</h2>
-        </header>
-        <main>
-            <ul id="lista-historico"></ul> <!-- Aqui será exibido o histórico -->
-            <button class="option-btn" onclick="showScreen('menu-principal')">Voltar</button>
-        </main>
-    </section>
 
     <footer>
         <p>Desenvolvido por Senac Grupo 09</p>

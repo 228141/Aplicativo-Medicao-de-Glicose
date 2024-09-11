@@ -195,3 +195,62 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
+// Função para carregar e exibir o histórico de medições
+function carregarHistoricoMedicoes() {
+    // Obter o usuário logado
+    const usuarioLogado = localStorage.getItem('loggedInUser');
+    if (!usuarioLogado) {
+        console.error('Nenhum usuário está logado.');
+        return;
+    }
+
+    // Obter as medições salvas para o usuário logado
+    const medicoesSalvas = localStorage.getItem(`${usuarioLogado}-measurements`);
+    if (!medicoesSalvas) {
+        console.log('Nenhuma medição encontrada para o usuário logado.');
+        document.getElementById('lista-historico').innerHTML = '<li>Nenhuma medição registrada.</li>';
+        return;
+    }
+
+    // Converter as medições salvas de JSON para um array
+    const medicoes = JSON.parse(medicoesSalvas);
+
+    // Selecionar o elemento da lista onde o histórico será exibido
+    const listaHistorico = document.getElementById('lista-historico');
+    listaHistorico.innerHTML = ''; // Limpar o conteúdo anterior
+
+    // Verificar se há medições e exibi-las
+    medicoes.forEach(medicao => {
+        const listItem = document.createElement('li');
+        const nivelGlicose = medicao.nivelGlicose || medicao.nivel; // Considerar ambos os formatos
+        const dataHora = new Date(medicao.dataHora).toLocaleString(); // Formatar a data e hora
+        listItem.textContent = `Nível de glicose: ${nivelGlicose} - Data/Hora: ${dataHora}`;
+        listaHistorico.appendChild(listItem); // Adicionar o item à lista
+    });
+}
+
+// Função para mostrar a tela do histórico
+function mostrarTelaHistorico() {
+    // Ocultar todas as telas
+    const screens = document.querySelectorAll('.screen');
+    screens.forEach(screen => screen.classList.add('hidden'));
+
+    // Exibir a tela de histórico
+    const telaHistorico = document.getElementById('historico-medicoes');
+    telaHistorico.classList.remove('hidden');
+
+    // Carregar as medições
+    carregarHistoricoMedicoes();
+}
+
+// Função para mostrar a tela principal
+function mostrarTelaPrincipal() {
+    // Ocultar todas as telas
+    const screens = document.querySelectorAll('.screen');
+    screens.forEach(screen => screen.classList.add('hidden'));
+
+    // Exibir a tela principal
+    const telaPrincipal = document.getElementById('menu-principal');
+    telaPrincipal.classList.remove('hidden');
+}
