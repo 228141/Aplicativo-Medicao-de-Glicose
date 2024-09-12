@@ -1,4 +1,4 @@
-//1- Função para mostrar uma tela específica e ocultar as demais
+// 1- Função para mostrar uma tela específica e ocultar as demais
 function showScreen(screenId) {
     const screens = document.querySelectorAll('.screen');
     screens.forEach(screen => {
@@ -12,7 +12,7 @@ function showScreen(screenId) {
     });
 }
 
-//2 Função para inicializar a página com base na URL ou exibir a tela padrão
+// 2 Função para inicializar a página com base na URL ou exibir a tela padrão
 function initializePage() {
     const hash = window.location.hash.substring(1);
     if (hash) {
@@ -22,7 +22,7 @@ function initializePage() {
     }
 }
 
-//3 Função para registrar um novo usuário
+// 3 Função para registrar um novo usuário
 function handleRegister(event) {
     event.preventDefault();
 
@@ -53,7 +53,7 @@ function handleRegister(event) {
     showScreen('dashboard-screen');
 }
 
-//4 Função para lidar com o login do usuário
+// 4 Função para lidar com o login do usuário
 function handleLogin(event) {
     event.preventDefault();
 
@@ -72,7 +72,7 @@ function handleLogin(event) {
     }
 }
 
-//5 Função para redefinir a senha do usuário
+// 5 Função para redefinir a senha do usuário
 function handleResetPassword(event) {
     event.preventDefault();
 
@@ -92,10 +92,26 @@ function handleResetPassword(event) {
     }
 }
 
+// Inicialização das funcionalidades quando o DOM estiver carregado
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializa a página padrão
+    initializePage();
 
+    // Event listener para o formulário de registro
+    const registerForm = document.getElementById('register-form');
+    if (registerForm) {
+        registerForm.addEventListener('submit', handleRegister);
+    }
 
+    // Event listener para o formulário de login
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', handleLogin);
+    }
 
-
-
-
-
+    // Event listener para o formulário de redefinição de senha
+    const resetForm = document.getElementById('reset-form');
+    if (resetForm) {
+        resetForm.addEventListener('submit', handleResetPassword);
+    }
+});
