@@ -310,3 +310,25 @@ footer {
 .tabela-grade th {
     background-color: #f2f2f2;
 }
+
+.links-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.link-btn {
+    padding: 10px;
+    background-color: #4CAF50; /* Verde claro */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+}
+
+.link-btn:hover {
+    background-color: #45a049;
+}

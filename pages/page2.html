@@ -66,13 +66,13 @@
             <section id="rastreio-insulina" class="screen hidden">
                 <h2>Rastreio de Insulina e Medicação</h2>
 
-                <h3>Último registro</h3>
+                <h2>Último registro</h2>
                 <div id="ultimo-registro-insulina">
                     <p>Nenhuma dose registrada.</p>
                 </div>
                 <br>
                 <div>
-                    <h3>Formulário de registro de doses</h3>
+                    <h2>Formulário de registro de doses</h2>
                     <form id="form-insulina">
                         <label for="tipo-insulina">Tipo de Insulina:</label>
                         <input type="text" id="tipo-insulina" required>
@@ -85,7 +85,7 @@
                 </div>
 
                 <!-- Histórico de doses -->
-                <h3>Histórico de Insulina e Medicação</h3>
+                <h2>Histórico de Insulina e Medicação</h2>
                 <ul id="lista-historico-insulina"></ul>
 
                 <!-- Histórico de doses de insulina em formato de tabela com grade -->
@@ -106,40 +106,69 @@
                 <button onclick="showScreen('menu-principal')">Voltar</button>
             </section>
 
+            <!-- Botão do Diário Alimentar na tela principal -->
             <button class="option-btn" onclick="showScreen('diario-alimentar')">Diário Alimentar</button>
+
             <!-- Tela do Diário Alimentar -->
-            <h3>Diário Alimentar</h3>
+            <section id="diario-alimentar" class="screen hidden">
+                <h2>Diário Alimentar</h2>
+                
+                <!-- Formulário para registrar nova refeição -->
+                <form id="form-diario-alimentar">
+                    <label for="nome-refeicao">Refeição:</label>
+                    <input type="text" id="nome-refeicao" required>
+                    
+                    <label for="alimentos">Alimentos Consumidos:</label>
+                    <textarea id="alimentos" required></textarea>
+                    
+                    <label for="data-hora-refeicao">Data e Hora:</label>
+                    <input type="datetime-local" id="data-hora-refeicao" required>
+                    
+                    <button type="submit">Registrar Refeição</button>
+                </form>
 
-            <!-- Formulário para registrar nova refeição -->
-            <form id="form-diario-alimentar">
-                <label for="nome-refeicao">Refeição:</label>
-                <input type="text" id="nome-refeicao" required>
+                <!-- Tabela do Histórico do Diário Alimentar -->
+                <table id="tabela-diario-alimentar" class="hidden">
+                    <thead>
+                        <tr>
+                            <th>Refeição</th>
+                            <th>Alimentos Consumidos</th>
+                            <th>Data e Hora</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lista-diario-alimentar">
+                        <!-- As refeições serão inseridas aqui -->
+                    </tbody>
+                </table>
 
-                <label for="alimentos">Alimentos Consumidos:</label>
-                <textarea id="alimentos" required></textarea>
+                <!-- Botão de Voltar para o Menu Principal -->
+                <button onclick="showScreen('menu-principal')">Voltar</button>
+            </section>
 
-                <label for="data-hora-refeicao">Data e Hora:</label>
-                <input type="datetime-local" id="data-hora-refeicao" required>
 
-                <button type="submit">Registrar Refeição</button>
-            </form>
+            <!-- Botão para acessar o Relatório na tela principal -->
+            <button class="option-btn" id="btn-relatorio" onclick="showScreen('relatorio')">Relatório</button>
+            <!-- Tela de Relatório -->
+            <section id="relatorio" class="screen hidden">
+                <h2>Relatório</h2>
+                <div id="relatorio-conteudo">
+                    <!-- O conteúdo do relatório será inserido aqui pelo JavaScript -->
+                </div>
+                <button onclick="showScreen('menu-principal')">Voltar</button>
+            </section>
 
-            <!-- Tabela para exibir o histórico do diário alimentar -->
-            <table class="tabela-grade">
-                <thead>
-                    <tr>
-                        <th>Refeição</th>
-                        <th>Alimentos Consumidos</th>
-                        <th>Data e Hora</th>
-                    </tr>
-                </thead>
-                <tbody id="tabela-historico-refeicoes">
-                    <!-- Linhas do histórico serão adicionadas aqui -->
-                </tbody>
-            </table>
-
-            <button class="option-btn" onclick="showScreen('relatorios')">Relatórios</button>
-            <button class="option-btn" onclick="showScreen('outras-funcionalidades')">Outras Funcionalidades</button>
+            <!-- Botão de Outras Funcionalidades -->
+            <button class="option-btn" onclick="toggleLinks()">Links Úteis Sobre Diabetes</button>
+            <!-- Seção oculta com os links úteis -->
+            <section id="links-uteis" class="hidden">
+                <h2>Links Úteis</h2>
+                <div class="links-container">
+                    <button class="link-btn" onclick="window.open('https://www.gov.br/saude/pt-br')">Ministério da Saúde.</button>
+                    <button class="link-btn" onclick="window.open('https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/d/diabetes', '_blank')">Portal de Saúde - Governo do Brasil.</button>
+                    <button class="link-btn" onclick="window.open('https://diabetes.org.br/')">Sociedade Brasileira de Diabetes.</button>
+                    <button class="link-btn" onclick="window.open('https://www.msdmanuals.com/pt-br/casa/dist%C3%BArbios-hormonais-e-metab%C3%B3licos/diabetes-mellitus-dm-e-dist%C3%BArbios-do-metabolismo-da-glicose-no-sangue/diabetes-mellitus-dm', '_blank')">Manual MSD - Diabetes Mellitus.</button>
+                </div>
+            </section>
         </div>
     </main>
 

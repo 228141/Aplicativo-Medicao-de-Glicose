@@ -12,66 +12,7 @@ function showScreen(screenId) {
     });
 }
 
-//2 Função para mostrar a tela do histórico
-function mostrarTelaHistorico() {
-    showScreen('historico-medicoes');
-    exibirHistoricoMedicoes(); // Atualiza a lista de medições
-}
-
-//3 Função para inicializar a página com base na URL ou exibir a tela padrão
-function initializePage() {
-    const hash = window.location.hash.substring(1);
-    if (hash) {
-        showScreen(hash);
-    } else {
-        showScreen('dashboard-screen'); // Tela padrão
-    }
-}
-
-//4 Funções relacionadas às medições (page2.html)
-function salvarMedicao(nivelGlicose, dataHora) {
-    const medicao = { nivelGlicose, dataHora };
-    let medicoes = JSON.parse(localStorage.getItem('medicoes')) || [];
-    medicoes.push(medicao);
-    localStorage.setItem('medicoes', JSON.stringify(medicoes));
-    exibirUltimaMedicao();
-}
-
-function exibirUltimaMedicao() {
-    const medicaoAtualDiv = document.getElementById('medicao-atual');
-    if (!medicaoAtualDiv) return;
-
-    let medicoes = JSON.parse(localStorage.getItem('medicoes')) || [];
-    if (medicoes.length > 0) {
-        const ultimaMedicao = medicoes[medicoes.length - 1];
-        medicaoAtualDiv.innerHTML = `
-            <p>Nível de Glicose: ${ultimaMedicao.nivelGlicose} mg/dL</p>
-            <p>Data e Hora: ${new Date(ultimaMedicao.dataHora).toLocaleString()}</p>
-        `;
-    } else {
-        medicaoAtualDiv.innerHTML = '<p>Nenhuma medição registrada.</p>';
-    }
-}
-
-function exibirHistoricoMedicoes() {
-    const listaHistorico = document.getElementById('lista-historico');
-    if (!listaHistorico) return;
-
-    listaHistorico.innerHTML = '';
-    const historico = JSON.parse(localStorage.getItem('medicoes')) || [];
-
-    if (historico.length === 0) {
-        listaHistorico.innerHTML = '<li>Nenhuma medição registrada.</li>';
-    } else {
-        historico.forEach((medicao, index) => {
-            const item = document.createElement('li');
-            item.textContent = `Medição ${index + 1}: Glicose: ${medicao.nivelGlicose} mg/dL - Data: ${new Date(medicao.dataHora).toLocaleString()}`;
-            listaHistorico.appendChild(item);
-        });
-    }
-}
-
-//5 Inicialização das funcionalidades quando o DOM estiver carregado
+//2 Inicialização das funcionalidades quando o DOM estiver carregado
 document.addEventListener('DOMContentLoaded', function() {
     initializePage();
 
@@ -121,7 +62,66 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Função para exibir o gráfico
+//3 Função para inicializar a página com base na URL ou exibir a tela padrão
+function initializePage() {
+    const hash = window.location.hash.substring(1);
+    if (hash) {
+        showScreen(hash);
+    } else {
+        showScreen('dashboard-screen'); // Tela padrão
+    }
+}
+
+//4 Funções relacionadas para salvar medições
+function salvarMedicao(nivelGlicose, dataHora) {
+    const medicao = { nivelGlicose, dataHora };
+    let medicoes = JSON.parse(localStorage.getItem('medicoes')) || [];
+    medicoes.push(medicao);
+    localStorage.setItem('medicoes', JSON.stringify(medicoes));
+    exibirUltimaMedicao();
+}
+
+//5 Função para mostrar a tela do histórico
+function mostrarTelaHistorico() {
+    showScreen('historico-medicoes');
+    exibirHistoricoMedicoes(); // Atualiza a lista de medições
+}
+
+function exibirUltimaMedicao() {
+    const medicaoAtualDiv = document.getElementById('medicao-atual');
+    if (!medicaoAtualDiv) return;
+
+    let medicoes = JSON.parse(localStorage.getItem('medicoes')) || [];
+    if (medicoes.length > 0) {
+        const ultimaMedicao = medicoes[medicoes.length - 1];
+        medicaoAtualDiv.innerHTML = `
+            <p>Nível de Glicose: ${ultimaMedicao.nivelGlicose} mg/dL</p>
+            <p>Data e Hora: ${new Date(ultimaMedicao.dataHora).toLocaleString()}</p>
+        `;
+    } else {
+        medicaoAtualDiv.innerHTML = '<p>Nenhuma medição registrada.</p>';
+    }
+}
+
+function exibirHistoricoMedicoes() {
+    const listaHistorico = document.getElementById('lista-historico');
+    if (!listaHistorico) return;
+
+    listaHistorico.innerHTML = '';
+    const historico = JSON.parse(localStorage.getItem('medicoes')) || [];
+
+    if (historico.length === 0) {
+        listaHistorico.innerHTML = '<li>Nenhuma medição registrada.</li>';
+    } else {
+        historico.forEach((medicao, index) => {
+            const item = document.createElement('li');
+            item.textContent = `Medição ${index + 1}: Glicose: ${medicao.nivelGlicose} mg/dL - Data: ${new Date(medicao.dataHora).toLocaleString()}`;
+            listaHistorico.appendChild(item);
+        });
+    }
+}
+
+//6 Função para exibir o gráfico
 function exibirGrafico() {
     const ctx = document.getElementById('graficoGlicose').getContext('2d');
 
@@ -170,8 +170,7 @@ function exibirGrafico() {
         }
     });
 }
-
-// Event listener para o botão de gráfico
+//6.1 Função para exibir o gráfico
 const graficoBtn = document.querySelector('button[onclick="showScreen(\'grafico-medicoes\')"]');
 if (graficoBtn) {
     graficoBtn.addEventListener('click', function() {
@@ -180,7 +179,7 @@ if (graficoBtn) {
     });
 }
 
-// Função para salvar a dose de insulina no localStorage
+//7 Função para salvar a dose de insulina no localStorage
 function salvarInsulina(tipo, dose, dataHora) {
     const userEmail = localStorage.getItem('loggedInUser');
     let insulina = JSON.parse(localStorage.getItem(userEmail + '-insulina')) || [];
@@ -191,7 +190,7 @@ function salvarInsulina(tipo, dose, dataHora) {
     exibirUltimaDose();
 }
 
-// Função para exibir a última dose de insulina
+//7.1 Função para exibir a última dose de insulina
 function exibirUltimaDose() {
     const userEmail = localStorage.getItem('loggedInUser');
     let insulina = JSON.parse(localStorage.getItem(userEmail + '-insulina')) || [];
@@ -265,57 +264,119 @@ function exibirHistoricoInsulina() {
     }
 }
 
-// Função para registrar uma nova refeição
-function registrarRefeicao(event) {
+// Event listener para registrar nova refeição no Diário Alimentar
+document.getElementById('form-diario-alimentar').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    const userEmail = localStorage.getItem('loggedInUser');
     const refeicao = document.getElementById('nome-refeicao').value;
     const alimentos = document.getElementById('alimentos').value;
     const dataHora = document.getElementById('data-hora-refeicao').value;
 
+    const userEmail = localStorage.getItem('loggedInUser');
     let diarioAlimentar = JSON.parse(localStorage.getItem(userEmail + '-diarioAlimentar')) || [];
 
     diarioAlimentar.push({ refeicao, alimentos, dataHora });
     localStorage.setItem(userEmail + '-diarioAlimentar', JSON.stringify(diarioAlimentar));
 
+    // Atualiza a tabela após salvar a refeição
+    atualizarTabelaDiarioAlimentar(diarioAlimentar);
+
     alert('Refeição registrada com sucesso!');
-    exibirHistoricoRefeicoes();
-    document.getElementById('form-diario-alimentar').reset();
-}
+    showScreen('menu-principal'); // Volta para o menu principal após registrar
+});
 
-// Função para exibir o histórico do diário alimentar
-function exibirHistoricoRefeicoes() {
-    const userEmail = localStorage.getItem('loggedInUser');
-    const diarioAlimentar = JSON.parse(localStorage.getItem(userEmail + '-diarioAlimentar')) || [];
+// Função para atualizar a tabela de refeições
+function atualizarTabelaDiarioAlimentar(diarioAlimentar) {
+    const tabela = document.getElementById('tabela-diario-alimentar');
+    const lista = document.getElementById('lista-diario-alimentar');
+    
+    lista.innerHTML = ''; // Limpa a tabela antes de inserir novos dados
 
-    const tabelaHistorico = document.getElementById('tabela-historico-refeicoes');
-    tabelaHistorico.innerHTML = ''; // Limpa a tabela antes de inserir novos dados
+    if (diarioAlimentar.length > 0) {
+        tabela.classList.remove('hidden'); // Exibe a tabela se houver registros
 
-    if (diarioAlimentar.length === 0) {
-        tabelaHistorico.innerHTML = '<tr><td colspan="3">Nenhuma refeição registrada.</td></tr>';
-    } else {
-        diarioAlimentar.forEach((refeicao) => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
+        diarioAlimentar.forEach(refeicao => {
+            const linha = document.createElement('tr');
+            linha.innerHTML = `
                 <td>${refeicao.refeicao}</td>
                 <td>${refeicao.alimentos}</td>
                 <td>${new Date(refeicao.dataHora).toLocaleString()}</td>
             `;
-            tabelaHistorico.appendChild(row);
+            lista.appendChild(linha);
         });
+    } else {
+        tabela.classList.add('hidden'); // Oculta a tabela se não houver registros
     }
 }
 
-// Função para inicializar o Diário Alimentar
-document.addEventListener('DOMContentLoaded', function() {
-    if (window.location.pathname.includes('page2.html')) {
-        exibirHistoricoRefeicoes();
+// Exibir o Diário Alimentar com a tabela
+function exibirDiarioAlimentar() {
+    const userEmail = localStorage.getItem('loggedInUser');
+    let diarioAlimentar = JSON.parse(localStorage.getItem(userEmail + '-diarioAlimentar')) || [];
 
-        const formDiarioAlimentar = document.getElementById('form-diario-alimentar');
-        if (formDiarioAlimentar) {
-            formDiarioAlimentar.addEventListener('submit', registrarRefeicao);
-        }
+    atualizarTabelaDiarioAlimentar(diarioAlimentar);
+    showScreen('diario-alimentar'); // Exibe a tela de Diário Alimentar
+}
+
+// Função para gerar o relatório
+function gerarRelatorio() {
+    const userEmail = localStorage.getItem('loggedInUser');
+    const medicoes = JSON.parse(localStorage.getItem(userEmail + '-measurements')) || [];
+    const insulina = JSON.parse(localStorage.getItem(userEmail + '-insulina')) || [];
+    const diarioAlimentar = JSON.parse(localStorage.getItem(userEmail + '-diarioAlimentar')) || [];
+
+    let relatorioHTML = '<h3>Relatório Resumido</h3>';
+
+    // Seção de Medições
+    relatorioHTML += '<h4>Medições de Glicose</h4>';
+    if (medicoes.length === 0) {
+        relatorioHTML += '<p>Nenhuma medição registrada.</p>';
+    } else {
+        medicoes.forEach((medicao, index) => {
+            relatorioHTML += `
+                <p>Medição ${index + 1}: Glicose: ${medicao.nivelGlicose} mg/dL, Data: ${new Date(medicao.dataHora).toLocaleString()}</p>
+            `;
+        });
+    }
+
+    // Seção de Doses de Insulina
+    relatorioHTML += '<h4>Rastreio de Insulina e Medicação</h4>';
+    if (insulina.length === 0) {
+        relatorioHTML += '<p>Nenhuma dose registrada.</p>';
+    } else {
+        insulina.forEach((dose, index) => {
+            relatorioHTML += `
+                <p>Dose ${index + 1}: Tipo: ${dose.tipo}, Dose: ${dose.dose} unidades, Data: ${new Date(dose.dataHora).toLocaleString()}</p>
+            `;
+        });
+    }
+
+    // Seção de Diário Alimentar
+    relatorioHTML += '<h4>Diário Alimentar</h4>';
+    if (diarioAlimentar.length === 0) {
+        relatorioHTML += '<p>Nenhuma refeição registrada.</p>';
+    } else {
+        diarioAlimentar.forEach((refeicao, index) => {
+            relatorioHTML += `
+                <p>Refeição ${index + 1}: Nome: ${refeicao.refeicao}, Alimentos: ${refeicao.alimentos}, Data: ${new Date(refeicao.dataHora).toLocaleString()}</p>
+            `;
+        });
+    }
+
+    // Exibir o relatório na tela
+    document.getElementById('relatorio-conteudo').innerHTML = relatorioHTML;
+}
+
+// Inicializar a tela de Relatório
+document.addEventListener('DOMContentLoaded', function() {
+    const relatorioBtn = document.getElementById('btn-relatorio');
+    if (relatorioBtn) {
+        relatorioBtn.addEventListener('click', gerarRelatorio);
     }
 });
 
+// Função para exibir ou ocultar os links úteis
+function toggleLinks() {
+    const linksSection = document.getElementById('links-uteis');
+    linksSection.classList.toggle('hidden');
+}
