@@ -120,3 +120,63 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
+// Função para exibir o gráfico
+function exibirGrafico() {
+    const ctx = document.getElementById('graficoGlicose').getContext('2d');
+
+    // Recupera o histórico do localStorage
+    const userEmail = localStorage.getItem('loggedInUser');
+    const historico = JSON.parse(localStorage.getItem(userEmail + '-measurements')) || [];
+
+    if (historico.length === 0) {
+        alert('Nenhuma medição registrada para exibir no gráfico.');
+        return;
+    }
+
+    const niveisGlicose = historico.map(medicao => medicao.nivelGlicose);
+    const datas = historico.map(medicao => new Date(medicao.dataHora).toLocaleString());
+
+    // Cria o gráfico usando Chart.js
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: datas, // Datas das medições
+            datasets: [{
+                label: 'Nível de Glicose (mg/dL)',
+                data: niveisGlicose,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Data e Hora'
+                    }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Nível de Glicose (mg/dL)'
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Event listener para o botão de gráfico
+const graficoBtn = document.querySelector('button[onclick="showScreen(\'grafico-medicoes\')"]');
+if (graficoBtn) {
+    graficoBtn.addEventListener('click', function() {
+        showScreen('grafico-medicoes');
+        exibirGrafico(); // Chama a função para exibir o gráfico
+    });
+}
+

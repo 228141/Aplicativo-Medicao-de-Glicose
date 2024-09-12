@@ -6,6 +6,7 @@
     <title>Diabetes App - Página Inicial</title>
     <link rel="stylesheet" href="styles.css">
     <script defer src="scriptspage2.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <!-- Página inicial -->
@@ -54,6 +55,12 @@
 
             <!-- Outros botões -->
             <button class="option-btn" onclick="showScreen('grafico-medicoes')">Gráfico</button>
+            <section id="grafico-medicoes" class="screen hidden">
+                <h2>Gráfico de Níveis de Glicose</h2>
+                <canvas id="graficoGlicose"></canvas>
+                <button onclick="showScreen('menu-principal')">Voltar</button>
+            </section>
+            
             <button class="option-btn" onclick="showScreen('rastreio-insulina')">Rastreio de Insulina e Medicação</button>
             <button class="option-btn" onclick="showScreen('diario-alimentar')">Diário Alimentar</button>
             <button class="option-btn" onclick="showScreen('relatorios')">Relatórios</button>
