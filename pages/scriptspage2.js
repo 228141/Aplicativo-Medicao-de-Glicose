@@ -265,4 +265,57 @@ function exibirHistoricoInsulina() {
     }
 }
 
+// Função para registrar uma nova refeição
+function registrarRefeicao(event) {
+    event.preventDefault();
+
+    const userEmail = localStorage.getItem('loggedInUser');
+    const refeicao = document.getElementById('nome-refeicao').value;
+    const alimentos = document.getElementById('alimentos').value;
+    const dataHora = document.getElementById('data-hora-refeicao').value;
+
+    let diarioAlimentar = JSON.parse(localStorage.getItem(userEmail + '-diarioAlimentar')) || [];
+
+    diarioAlimentar.push({ refeicao, alimentos, dataHora });
+    localStorage.setItem(userEmail + '-diarioAlimentar', JSON.stringify(diarioAlimentar));
+
+    alert('Refeição registrada com sucesso!');
+    exibirHistoricoRefeicoes();
+    document.getElementById('form-diario-alimentar').reset();
+}
+
+// Função para exibir o histórico do diário alimentar
+function exibirHistoricoRefeicoes() {
+    const userEmail = localStorage.getItem('loggedInUser');
+    const diarioAlimentar = JSON.parse(localStorage.getItem(userEmail + '-diarioAlimentar')) || [];
+
+    const tabelaHistorico = document.getElementById('tabela-historico-refeicoes');
+    tabelaHistorico.innerHTML = ''; // Limpa a tabela antes de inserir novos dados
+
+    if (diarioAlimentar.length === 0) {
+        tabelaHistorico.innerHTML = '<tr><td colspan="3">Nenhuma refeição registrada.</td></tr>';
+    } else {
+        diarioAlimentar.forEach((refeicao) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${refeicao.refeicao}</td>
+                <td>${refeicao.alimentos}</td>
+                <td>${new Date(refeicao.dataHora).toLocaleString()}</td>
+            `;
+            tabelaHistorico.appendChild(row);
+        });
+    }
+}
+
+// Função para inicializar o Diário Alimentar
+document.addEventListener('DOMContentLoaded', function() {
+    if (window.location.pathname.includes('page2.html')) {
+        exibirHistoricoRefeicoes();
+
+        const formDiarioAlimentar = document.getElementById('form-diario-alimentar');
+        if (formDiarioAlimentar) {
+            formDiarioAlimentar.addEventListener('submit', registrarRefeicao);
+        }
+    }
+});
 

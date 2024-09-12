@@ -107,6 +107,37 @@
             </section>
 
             <button class="option-btn" onclick="showScreen('diario-alimentar')">Diário Alimentar</button>
+            <!-- Tela do Diário Alimentar -->
+            <h3>Diário Alimentar</h3>
+
+            <!-- Formulário para registrar nova refeição -->
+            <form id="form-diario-alimentar">
+                <label for="nome-refeicao">Refeição:</label>
+                <input type="text" id="nome-refeicao" required>
+
+                <label for="alimentos">Alimentos Consumidos:</label>
+                <textarea id="alimentos" required></textarea>
+
+                <label for="data-hora-refeicao">Data e Hora:</label>
+                <input type="datetime-local" id="data-hora-refeicao" required>
+
+                <button type="submit">Registrar Refeição</button>
+            </form>
+
+            <!-- Tabela para exibir o histórico do diário alimentar -->
+            <table class="tabela-grade">
+                <thead>
+                    <tr>
+                        <th>Refeição</th>
+                        <th>Alimentos Consumidos</th>
+                        <th>Data e Hora</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-historico-refeicoes">
+                    <!-- Linhas do histórico serão adicionadas aqui -->
+                </tbody>
+            </table>
+
             <button class="option-btn" onclick="showScreen('relatorios')">Relatórios</button>
             <button class="option-btn" onclick="showScreen('outras-funcionalidades')">Outras Funcionalidades</button>
         </div>
