@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
         resetForm.addEventListener('submit', handleResetPassword);
     }
 
-    // Event listener para o formulário de medição (page2.html)
+    // Event listener para o formulário de medição
     const measurementForm = document.getElementById('form-medicao');
     if (measurementForm) {
         measurementForm.addEventListener('submit', function(e) {
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Inicializa a última medição e histórico se estiver na page2.html
+    // Inicializa a última medição e histórico
     if (window.location.pathname.includes('page2.html')) {
         exibirUltimaMedicao();
 
@@ -103,20 +103,27 @@ function exibirUltimaMedicao() {
     }
 }
 
+
+// Função para exibir o histórico de medições em uma tabela
 function exibirHistoricoMedicoes() {
-    const listaHistorico = document.getElementById('lista-historico');
+    const listaHistorico = document.getElementById('lista-historico-medicoes');
     if (!listaHistorico) return;
 
-    listaHistorico.innerHTML = '';
-    const historico = JSON.parse(localStorage.getItem('medicoes')) || [];
+    const userEmail = localStorage.getItem('loggedInUser'); // Obtém o e-mail do usuário logado
+    listaHistorico.innerHTML = ''; // Limpa o conteúdo da tabela
+    const historico = JSON.parse(localStorage.getItem(userEmail + '-measurements')) || [];
 
     if (historico.length === 0) {
-        listaHistorico.innerHTML = '<li>Nenhuma medição registrada.</li>';
+        listaHistorico.innerHTML = '<tr><td colspan="3">Nenhuma medição registrada.</td></tr>';
     } else {
-        historico.forEach((medicao, index) => {
-            const item = document.createElement('li');
-            item.textContent = `Medição ${index + 1}: Glicose: ${medicao.nivelGlicose} mg/dL - Data: ${new Date(medicao.dataHora).toLocaleString()}`;
-            listaHistorico.appendChild(item);
+        historico.forEach((medicao) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>Medição</td>
+                <td>${medicao.nivelGlicose} mg/dL</td>
+                <td>${new Date(medicao.dataHora).toLocaleString()}</td>
+            `;
+            listaHistorico.appendChild(row);
         });
     }
 }

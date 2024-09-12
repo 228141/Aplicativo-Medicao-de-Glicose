@@ -332,3 +332,21 @@ footer {
 .link-btn:hover {
     background-color: #45a049;
 }
+
+#tabela-historico-medicoes {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+}
+
+#tabela-historico-medicoes th, #tabela-historico-medicoes td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#tabela-historico-medicoes th {
+    background-color: #f2f2f2;
+    color: black;
+}

@@ -48,7 +48,18 @@
             <section id="historico-medicoes" class="screen hidden">
                 <h2>Histórico de Medições</h2>
                 <main>
-                    <ul id="lista-historico"></ul> <!-- Aqui será exibido o histórico -->
+                    <table id="tabela-historico-medicoes">
+                        <thead>
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Nível de Glicose (mg/dL)</th>
+                                <th>Data e Hora</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-historico-medicoes">
+                            <!-- As medições serão inseridas aqui dinamicamente -->
+                        </tbody>
+                    </table>
                     <button class="option-btn" onclick="showScreen('menu-principal')">Voltar</button>
                 </main>
             </section>
