@@ -60,8 +60,52 @@
                 <canvas id="graficoGlicose"></canvas>
                 <button onclick="showScreen('menu-principal')">Voltar</button>
             </section>
-            
+
             <button class="option-btn" onclick="showScreen('rastreio-insulina')">Rastreio de Insulina e Medicação</button>
+            <!-- Tela de Rastreio de Insulina e Medicação -->
+            <section id="rastreio-insulina" class="screen hidden">
+                <h2>Rastreio de Insulina e Medicação</h2>
+
+                <h3>Último registro</h3>
+                <div id="ultimo-registro-insulina">
+                    <p>Nenhuma dose registrada.</p>
+                </div>
+                <br>
+                <div>
+                    <h3>Formulário de registro de doses</h3>
+                    <form id="form-insulina">
+                        <label for="tipo-insulina">Tipo de Insulina:</label>
+                        <input type="text" id="tipo-insulina" required>
+                        <label for="dose-insulina">Dose (unidades):</label>
+                        <input type="number" id="dose-insulina" required>
+                        <label for="data-hora-insulina">Data e Hora:</label>
+                        <input type="datetime-local" id="data-hora-insulina" required>
+                        <button type="submit">Salvar Dose</button>
+                    </form>
+                </div>
+
+                <!-- Histórico de doses -->
+                <h3>Histórico de Insulina e Medicação</h3>
+                <ul id="lista-historico-insulina"></ul>
+
+                <!-- Histórico de doses de insulina em formato de tabela com grade -->
+                <table class="tabela-grade">
+                    <thead>
+                        <tr>
+                            <th>Tipo de Insulina</th>
+                            <th>Dose (unidades)</th>
+                            <th>Data e Hora</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-historico-insulina">
+                        <!-- As linhas de histórico serão adicionadas aqui pelo JavaScript -->
+                    </tbody>
+                </table>
+
+
+                <button onclick="showScreen('menu-principal')">Voltar</button>
+            </section>
+
             <button class="option-btn" onclick="showScreen('diario-alimentar')">Diário Alimentar</button>
             <button class="option-btn" onclick="showScreen('relatorios')">Relatórios</button>
             <button class="option-btn" onclick="showScreen('outras-funcionalidades')">Outras Funcionalidades</button>

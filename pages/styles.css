@@ -277,3 +277,19 @@ footer {
     display: block;
 }
 
+/* Estilo para tabela com grade */
+.tabela-grade {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.tabela-grade th, .tabela-grade td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.tabela-grade th {
+    background-color: #f2f2f2;
+}

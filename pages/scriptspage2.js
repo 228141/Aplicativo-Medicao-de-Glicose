@@ -180,3 +180,89 @@ if (graficoBtn) {
     });
 }
 
+// Função para salvar a dose de insulina no localStorage
+function salvarInsulina(tipo, dose, dataHora) {
+    const userEmail = localStorage.getItem('loggedInUser');
+    let insulina = JSON.parse(localStorage.getItem(userEmail + '-insulina')) || [];
+
+    insulina.push({ tipo, dose, dataHora });
+    localStorage.setItem(userEmail + '-insulina', JSON.stringify(insulina));
+
+    exibirUltimaDose();
+}
+
+// Função para exibir a última dose de insulina
+function exibirUltimaDose() {
+    const userEmail = localStorage.getItem('loggedInUser');
+    let insulina = JSON.parse(localStorage.getItem(userEmail + '-insulina')) || [];
+
+    const ultimoRegistroDiv = document.getElementById('ultimo-registro-insulina');
+    if (insulina.length > 0) {
+        const ultimaDose = insulina[insulina.length - 1];
+        ultimoRegistroDiv.innerHTML = `
+            <p>Tipo de Insulina: ${ultimaDose.tipo}</p>
+            <p>Dose: ${ultimaDose.dose} unidades</p>
+            <p>Data e Hora: ${new Date(ultimaDose.dataHora).toLocaleString()}</p>
+        `;
+    } else {
+        ultimoRegistroDiv.innerHTML = '<p>Nenhuma dose registrada.</p>';
+    }
+}
+
+// Função para exibir o histórico de doses
+function exibirHistoricoInsulina() {
+    const userEmail = localStorage.getItem('loggedInUser');
+    let insulina = JSON.parse(localStorage.getItem(userEmail + '-insulina')) || [];
+
+    const listaHistorico = document.getElementById('lista-historico-insulina');
+    listaHistorico.innerHTML = '';
+
+    if (insulina.length === 0) {
+        listaHistorico.innerHTML = '<li>Nenhuma dose registrada.</li>';
+    } else {
+        insulina.forEach((dose, index) => {
+            const item = document.createElement('li');
+            item.textContent = `Dose ${index + 1}: Tipo: ${dose.tipo}, Dose: ${dose.dose} unidades, Data: ${new Date(dose.dataHora).toLocaleString()}`;
+            listaHistorico.appendChild(item);
+        });
+    }
+}
+
+// Event listener para o formulário de insulina
+document.getElementById('form-insulina').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const tipo = document.getElementById('tipo-insulina').value;
+    const dose = document.getElementById('dose-insulina').value;
+    const dataHora = document.getElementById('data-hora-insulina').value;
+
+    salvarInsulina(tipo, dose, dataHora);
+    alert('Dose registrada com sucesso!');
+    exibirUltimaDose();
+    exibirHistoricoInsulina();
+});
+
+// Função para exibir o histórico de doses em uma tabela
+function exibirHistoricoInsulina() {
+    const userEmail = localStorage.getItem('loggedInUser');
+    let insulina = JSON.parse(localStorage.getItem(userEmail + '-insulina')) || [];
+
+    const tabelaHistorico = document.getElementById('tabela-historico-insulina');
+    tabelaHistorico.innerHTML = ''; // Limpa a tabela antes de inserir novos dados
+
+    if (insulina.length === 0) {
+        tabelaHistorico.innerHTML = '<tr><td colspan="3">Nenhuma dose registrada.</td></tr>';
+    } else {
+        // Adiciona as linhas da tabela com os dados das doses
+        insulina.forEach((dose) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${dose.tipo}</td>
+                <td>${dose.dose} unidades</td>
+                <td>${new Date(dose.dataHora).toLocaleString()}</td>
+            `;
+            tabelaHistorico.appendChild(row);
+        });
+    }
+}
+
+
