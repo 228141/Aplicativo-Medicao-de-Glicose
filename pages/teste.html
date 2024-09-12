@@ -15,6 +15,30 @@
 
         <div class="button-container">
             <button class="option-btn" onclick="showScreen('ultima-medicao')">Incluir Medição</button>
+            <!-- Tela de Última Medição -->
+            <section id="ultima-medicao" class="screen hidden">
+                <h2>Última Medição</h2>
+                <div id="medicao-atual">
+            <!-- Dados da última medição serão exibidos aqui -->
+                <p>Nenhuma medição registrada.</p>
+                </div>
+                <button onclick="showScreen('registrar-medicao')">Registrar Nova Medição</button>
+                <button onclick="showScreen('menu-principal')">Voltar</button>
+            </section>
+
+            <!-- Tela de Registrar Nova Medição -->
+            <section id="registrar-medicao" class="screen hidden">
+                <h2>Registrar Medição</h2>
+                <form id="form-medicao">
+                    <label for="nivel-glicose">Nível de Glicose:</label>
+                    <input type="number" id="nivel-glicose" required>
+                    <label for="data-hora">Data e Hora:</label>
+                    <input type="datetime-local" id="data-hora" required>
+                    <button type="submit">Salvar</button>
+                </form>
+                <button onclick="showScreen('ultima-medicao')">Voltar</button>
+            </section>
+            
             <button class="option-btn" onclick="showScreen('historico-medicoes')">Ver Histórico</button>
             <button class="option-btn" onclick="showScreen('grafico-medicoes')">Gráfico</button>
             <button class="option-btn" onclick="showScreen('rastreio-insulina')">Rastreio de Insulina e Medicação</button>
@@ -23,30 +47,6 @@
             <button class="option-btn" onclick="showScreen('outras-funcionalidades')">Outras Funcionalidades</button>
         </div>
     </main>
-
-    <!-- Tela de Última Medição -->
-    <section id="ultima-medicao" class="screen hidden">
-        <h2>Última Medição</h2>
-        <div id="medicao-atual">
-            <!-- Dados da última medição serão exibidos aqui -->
-            <p>Nenhuma medição registrada.</p>
-        </div>
-        <button onclick="showScreen('registrar-medicao')">Registrar Nova Medição</button>
-        <button onclick="showScreen('menu-principal')">Voltar</button>
-    </section>
-
-    <!-- Tela de Registrar Nova Medição -->
-    <section id="registrar-medicao" class="screen hidden">
-        <h2>Registrar Medição</h2>
-        <form id="form-medicao">
-            <label for="nivel-glicose">Nível de Glicose:</label>
-            <input type="number" id="nivel-glicose" required>
-            <label for="data-hora">Data e Hora:</label>
-            <input type="datetime-local" id="data-hora" required>
-            <button type="submit">Salvar</button>
-        </form>
-        <button onclick="showScreen('ultima-medicao')">Voltar</button>
-    </section>
 
     <!-- Tela de Histórico de Medições -->
     <section id="historico-medicoes" class="screen hidden">
